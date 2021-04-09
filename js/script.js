@@ -124,11 +124,83 @@ const getZipCodeField = document.getElementById('zip');
 const getCVVField = document.getElementById('cvv');
 const getFormElement = document.getElementsByTagName('form');
 
-getFormElement.addEventListener('submit', (event) => {
-    event.preventDefault();
+
+//helper function to validate name input
+const nameValidator = () => {
     let nameElementValue = getNameField.value;
+    if (nameElementValue === '') {
+        console.log('Please put in your name');
+    }
     let testNameValue = /^[a-zA-Z]+ [a-zA-Z]*? [a-zA-Z]+?$/.test(nameElementValue);
-    
     console.log(nameElementValue);
     console.log(testNameValue);
+    return testNameValue;
+};
+
+//helper function to validate email address input
+const emailValidator = () => {
+    let emailElementValue = getEmailField.value;
+    if (emailElementValue === '') {
+        console.log('Please put in an email address');
+        emailElementValue = false;
+    }
+    let testEmailValue = /^[a-z]+@[a-z]+.com$/i.test(emailElementValue);
+    console.log(emailElementValue);
+    console.log(testEmailValue);
+    return testEmailValue;
+};
+
+//helper function to validate that at least one activity is selected
+const activitiesValidator = () => {
+   let activitiesSectionIsValid = totalCost > 0;
+   console.log(activitiesSectionIsValid);
+    return activitiesSectionIsValid;
+};
+
+//helper function to validate credit card input if this payment method is selected
+const creditCardValidator = () => {
+    if (selectPayment.value === 'credit-card') {
+        let cardNumberFieldValue = getCardNumberField.value;
+        const testCardNumberField = /^\d{13, 16}$/.test(cardNumberFieldValue);
+        return testCardNumberField;
+    }
+
+    if (selectPayment.value === 'credit-card') {
+        let zipCodeFieldValue = getZipCodeField.value;
+        const testZipCodeField = /^\d{5}$/.test(zipCodeFieldValue);
+        return testZipCodeField;
+    }
+
+    if(selectPayment.value === 'credit-card') {
+        let CVVFieldValue = getCVVField.value;
+        const testCVVField = /^\d{3}$/.test(CVVFieldValue);
+        return testCVVField;
+    }
+    console.log(cardNumberFieldValue);
+    console.log(testCardNumberField);
+    console.log(zipCodeFieldValue);
+    console.log(testZipCodeField);
+    console.log(CVVFieldValue);
+    console.log(testCVVField);
+};
+
+
+getFormElement.addEventListener('submit', e => {
+    e.preventDefault();
+    if (!nameValidator === preventDefault()) {
+        console.log(`this ${nameValidator} prevented submission`);
+    }
+    
+    if (!emailValidator === preventDefault()) {
+        console.log(`this ${emailValidator} prevented submission`);
+    }
+   
+    if (!activitiesValidator === preventDefault()) {
+        console.log(`this ${activitiesValidator} prevented submission`);
+    }
+
+    if (!creditCardValidator === preventDefault()) {
+        console.log(`this ${creditCardValidator} prevented submission`);
+    }
+    
 });
