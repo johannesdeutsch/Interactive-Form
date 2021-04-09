@@ -185,22 +185,25 @@ const creditCardValidator = () => {
 };
 
 
-getFormElement.addEventListener('submit', e => {
-    e.preventDefault();
-    if (!nameValidator === preventDefault()) {
+getFormElement.addEventListener('submit', (event) => {
+    if (nameValidator === false) {
+        event.preventDefault();
         console.log(`this ${nameValidator} prevented submission`);
     }
     
-    if (!emailValidator === preventDefault()) {
+    if (emailValidator === false) {
+        event.preventDefault();
         console.log(`this ${emailValidator} prevented submission`);
     }
    
-    if (!activitiesValidator === preventDefault()) {
+    if (activitiesValidator === false) {
+        event.preventDefault();
         console.log(`this ${activitiesValidator} prevented submission`);
     }
 
-    if (!creditCardValidator === preventDefault()) {
+    if (creditCardValidator === false) {
+        event.preventDefault();
         console.log(`this ${creditCardValidator} prevented submission`);
     }
-    
+
 });
