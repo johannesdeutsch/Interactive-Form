@@ -122,7 +122,7 @@ const getEmailField = document.getElementById('email');
 const getCardNumberField = document.getElementById('cc-num');
 const getZipCodeField = document.getElementById('zip');
 const getCVVField = document.getElementById('cvv');
-const getFormElement = document.getElementsByTagName('form');
+const getFormElement = document.querySelector('form');
 
 
 //helper function to validate name input
@@ -171,7 +171,7 @@ const creditCardValidator = () => {
         return testZipCodeField;
     }
 
-    if(selectPayment.value === 'credit-card') {
+    if (selectPayment.value === 'credit-card') {
         let CVVFieldValue = getCVVField.value;
         const testCVVField = /^\d{3}$/.test(CVVFieldValue);
         return testCVVField;
@@ -205,5 +205,5 @@ getFormElement.addEventListener('submit', (event) => {
         event.preventDefault();
         console.log(`this ${creditCardValidator} prevented submission`);
     }
-
+    
 });
