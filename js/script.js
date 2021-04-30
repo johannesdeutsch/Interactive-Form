@@ -134,13 +134,20 @@ getFormElement.addEventListener('submit', (event) => {
         let testNameValue = /^[a-zA-Z]+ [a-zA-Z]*? [a-zA-Z]+?$/.test(nameElementValue);
         console.log(nameElementValue);
         console.log(testNameValue);
-        return testNameValue;
-    }
-    
-    if (!nameValidator) {
         event.preventDefault();
-        console.log(`this ${nameValidator} prevented submission`);
+        
+        if (event.target.testNameValue === false) {
+            event.preventDefault();
+            getNameField.className = 'invalid';
+            getNameField.lastElementChild.textContent = 'Please type in a correct credit card number';
+            getNameField.lastElementChild.className = 'error';
+        } else {
+            getNameField.className = 'valid';
+            getNameField.last.ElementChild.textContent = '';
+            getNameField.lastElementChild.className = 'error';
+        }
     }
+
     
     
     //helper function to validate email address input
@@ -153,9 +160,13 @@ getFormElement.addEventListener('submit', (event) => {
         return testEmailValue;
     };
 
+    emaiilValidator();
+
     if (!emailValidator) {
         event.preventDefault();
-        console.log(`this ${emailValidator} prevented submission`);
+        getCardNumberField.className = 'invalid';
+        getCardNumberField.lastElementChild.textContent = 'Please type in a correct credit card number';
+        getCardNumberField.lastElementChild.className = 'error';
     }
    
 
@@ -165,6 +176,8 @@ getFormElement.addEventListener('submit', (event) => {
         console.log(activitiesSectionIsValid);
         return activitiesSectionIsValid;
     };
+
+    activitiesValidator();
 
     if (!activitiesValidator) {
         event.preventDefault();
@@ -194,12 +207,31 @@ getFormElement.addEventListener('submit', (event) => {
         if (selectPayment.value === 'credit-card') {
             let zipCodeFieldValue = getZipCodeField.value;
             const testZipCodeField = /^\d{5}$/.test(zipCodeFieldValue);
+            if(!zipCodeFieldValue) {
+                getZipCodeField.className = 'invalid';
+                getZipCodeField.lastElementChild.textContent = 'Please type in a correct zip code';
+                getZipCodeField.lastElementChild.className = 'error';
+            } else {
+                getZipCodeField.className = 'valid';
+                getZipCodeField.last.ElementChild.textContent = '';
+                getZipCodeField.lastElementChild.className = 'error';
+            }
+            
             return testZipCodeField;
         }
 
         if (selectPayment.value === 'credit-card') {
             let CVVFieldValue = getCVVField.value;
             const testCVVField = /^\d{3}$/.test(CVVFieldValue);
+            if(!CVVFieldValue) {
+                getCVVField.className = 'invalid';
+                getCVVField.nextElementSibling.textContent = 'Please type in a correct cvv code';
+                getCVVField.nextElementSibling.className = 'error';
+            } else {
+                getCVVField.className = 'valid';
+                getCVVField.nextElementSibling.textContent = '';
+                getCVVField.nextElementSibling.className = 'error';
+            }
             return testCVVField;
         }
     
@@ -211,6 +243,7 @@ getFormElement.addEventListener('submit', (event) => {
         console.log(testCVVField);
     };
 
+    creditCardValidator();
 
     if (!creditCardValidator) {
         event.preventDefault();
@@ -219,3 +252,13 @@ getFormElement.addEventListener('submit', (event) => {
 
 
 });
+
+//select the input elements with the type 'checkbox'
+const selectInputElement = document.querySelectorAll('input[type=checkbox]');
+console.log(selectInputElement);
+
+//Loop over the activities'checkboxes
+for (let i = 0; i < selectInputElement.length; i++) {
+
+
+}
