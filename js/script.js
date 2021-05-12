@@ -125,140 +125,157 @@ const getCVVField = document.getElementById('cvv');
 const getFormElement = document.querySelector('form');
 
 
+function validationPass(element) {
+    element.parentElement.className = 'valid';
+    element.parentElement.className.remove('not-valid');
+    element.parentElement.lastElementChild.display = 'none';
+  }
+  
+  function validationFail(element) {
+    element.parentElement.className = 'not-valid';
+    element.parentElement.className.remove('valid');
+    element.parentElement.display = 'lastElementChild';
+  }
+
+
 getFormElement.addEventListener('submit', (event) => {
+    event.preventDefault();
+    console.log('Event was triggered');
+    
     
     //helper function to validate name input
     
     function nameValidator() {
         let nameElementValue = getNameField.value;
-        let testNameValue = /^[a-zA-Z]+ [a-zA-Z]*? [a-zA-Z]+?$/.test(nameElementValue);
-        console.log(nameElementValue);
+        console.log(nameElementValue);        
+        let testNameValue = /^[a-zA-Z]+ [a-zA-Z]+?$/.test(nameElementValue);
         console.log(testNameValue);
-        event.preventDefault();
         
-        if (event.target.testNameValue === false) {
+        if (!nameValidator()) {
             event.preventDefault();
-            getNameField.className = 'invalid';
-            getNameField.lastElementChild.textContent = 'Please type in a correct credit card number';
-            getNameField.lastElementChild.className = 'error';
+            validationFail(getNameField);
         } else {
-            getNameField.className = 'valid';
-            getNameField.last.ElementChild.textContent = '';
-            getNameField.lastElementChild.className = 'error';
-        }
-    }
-
-    
-    
-    //helper function to validate email address input
-
-    const emailValidator = () => {
-        let emailElementValue = getEmailField.value;
-        let testEmailValue = /^[a-z]+@[a-z]+.com$/i.test(emailElementValue);
-        console.log(emailElementValue);
-        console.log(testEmailValue);
-        return testEmailValue;
+            validationPass(getNameField);
+        }   
     };
 
-    emaiilValidator();
+    nameValidator();
+    
+    
+//     //helper function to validate email address input
 
-    if (!emailValidator) {
-        event.preventDefault();
-        getCardNumberField.className = 'invalid';
-        getCardNumberField.lastElementChild.textContent = 'Please type in a correct credit card number';
-        getCardNumberField.lastElementChild.className = 'error';
-    }
+//     const emailValidator = () => {
+//         let emailElementValue = getEmailField.value;
+//         let testEmailValue = /^[a-z]+@[a-z]+.com$/i.test(emailElementValue);
+//         console.log(emailElementValue);
+//         console.log(testEmailValue);
+//         return testEmailValue;
+//     };
+
+//     emailValidator();
+
+//     if (!emailValidator) {
+//         event.preventDefault();
+//         getCardNumberField.className = 'invalid';
+//         getCardNumberField.lastElementChild.textContent = 'Please type in a correct credit card number';
+//         getCardNumberField.lastElementChild.className = 'error';
+//     }
    
 
-    //helper function to validate that at least one activity is selected
-    const activitiesValidator = () => {
-        let activitiesSectionIsValid = totalCost > 0;
-        console.log(activitiesSectionIsValid);
-        return activitiesSectionIsValid;
-    };
+//     //helper function to validate that at least one activity is selected
+//     const activitiesValidator = () => {
+//         let activitiesSectionIsValid = totalCost > 0;
+//         console.log(activitiesSectionIsValid);
+//         return activitiesSectionIsValid;
+//     };
 
-    activitiesValidator();
+//     activitiesValidator();
 
-    if (!activitiesValidator) {
-        event.preventDefault();
-        console.log(`this ${activitiesValidator} prevented submission`);
-    }
+//     if (!activitiesValidator) {
+//         event.preventDefault();
+//         console.log(`this ${activitiesValidator} prevented submission`);
+//     }
 
 
-    //helper function to validate credit card input if this payment method is selected
-    const creditCardValidator = () => {
-        if (selectPayment.value === 'credit-card') {
-            let cardNumberFieldValue = getCardNumberField.value;
-            const testCardNumberField = /^\d{13, 16}$/.test(cardNumberFieldValue);
+//     //helper function to validate credit card input if this payment method is selected
+//     const creditCardValidator = () => {
+//         if (selectPayment.value === 'credit-card') {
+//             let cardNumberFieldValue = getCardNumberField.value;
+//             const testCardNumberField = /^\d{13, 16}$/.test(cardNumberFieldValue);
             
-            if(!testCardNumberField) {
-                getCardNumberField.className = 'invalid';
-                getCardNumberField.lastElementChild.textContent = 'Please type in a correct credit card number';
-                getCardNumberField.lastElementChild.className = 'error';
-            } else {
-                getCardNumberField.className = 'valid';
-                getCardNumberField.last.ElementChild.textContent = '';
-                getCardNumberField.lastElementChild.className = 'error';
+//             if(!testCardNumberField) {
+//                 getCardNumberField.className = 'invalid';
+//                 getCardNumberField.lastElementChild.textContent = 'Please type in a correct credit card number';
+//                 getCardNumberField.lastElementChild.className = 'error';
+//             } else {
+//                 getCardNumberField.className = 'valid';
+//                 getCardNumberField.last.ElementChild.textContent = '';
+//                 getCardNumberField.lastElementChild.className = 'error';
 
-            }
-            return testCardNumberField;
-        }
+//             }
+//             return testCardNumberField;
+//         }
 
-        if (selectPayment.value === 'credit-card') {
-            let zipCodeFieldValue = getZipCodeField.value;
-            const testZipCodeField = /^\d{5}$/.test(zipCodeFieldValue);
-            if(!zipCodeFieldValue) {
-                getZipCodeField.className = 'invalid';
-                getZipCodeField.lastElementChild.textContent = 'Please type in a correct zip code';
-                getZipCodeField.lastElementChild.className = 'error';
-            } else {
-                getZipCodeField.className = 'valid';
-                getZipCodeField.last.ElementChild.textContent = '';
-                getZipCodeField.lastElementChild.className = 'error';
-            }
+//         if (selectPayment.value === 'credit-card') {
+//             let zipCodeFieldValue = getZipCodeField.value;
+//             const testZipCodeField = /^\d{5}$/.test(zipCodeFieldValue);
+//             if(!zipCodeFieldValue) {
+//                 getZipCodeField.className = 'invalid';
+//                 getZipCodeField.lastElementChild.textContent = 'Please type in a correct zip code';
+//                 getZipCodeField.lastElementChild.className = 'error';
+//             } else {
+//                 getZipCodeField.className = 'valid';
+//                 getZipCodeField.last.ElementChild.textContent = '';
+//                 getZipCodeField.lastElementChild.className = 'error';
+//             }
             
-            return testZipCodeField;
-        }
+//             return testZipCodeField;
+//         }
 
-        if (selectPayment.value === 'credit-card') {
-            let CVVFieldValue = getCVVField.value;
-            const testCVVField = /^\d{3}$/.test(CVVFieldValue);
-            if(!CVVFieldValue) {
-                getCVVField.className = 'invalid';
-                getCVVField.nextElementSibling.textContent = 'Please type in a correct cvv code';
-                getCVVField.nextElementSibling.className = 'error';
-            } else {
-                getCVVField.className = 'valid';
-                getCVVField.nextElementSibling.textContent = '';
-                getCVVField.nextElementSibling.className = 'error';
-            }
-            return testCVVField;
-        }
+//         if (selectPayment.value === 'credit-card') {
+//             let CVVFieldValue = getCVVField.value;
+//             const testCVVField = /^\d{3}$/.test(CVVFieldValue);
+//             if(!CVVFieldValue) {
+//                 getCVVField.className = 'invalid';
+//                 getCVVField.nextElementSibling.textContent = 'Please type in a correct cvv code';
+//                 getCVVField.nextElementSibling.className = 'error';
+//             } else {
+//                 getCVVField.className = 'valid';
+//                 getCVVField.nextElementSibling.textContent = '';
+//                 getCVVField.nextElementSibling.className = 'error';
+//             }
+//             return testCVVField;
+//         }
     
-        console.log(cardNumberFieldValue);
-        console.log(testCardNumberField);
-        console.log(zipCodeFieldValue);
-        console.log(testZipCodeField);
-        console.log(CVVFieldValue);
-        console.log(testCVVField);
-    };
+//         console.log(cardNumberFieldValue);
+//         console.log(testCardNumberField);
+//         console.log(zipCodeFieldValue);
+//         console.log(testZipCodeField);
+//         console.log(CVVFieldValue);
+//         console.log(testCVVField);
+//     };
 
-    creditCardValidator();
+//     creditCardValidator();
 
-    if (!creditCardValidator) {
-        event.preventDefault();
-        console.log(`this ${creditCardValidator} prevented submission`);
-    }
-
-
-});
-
-//select the input elements with the type 'checkbox'
-const selectInputElement = document.querySelectorAll('input[type=checkbox]');
-console.log(selectInputElement);
-
-//Loop over the activities'checkboxes
-for (let i = 0; i < selectInputElement.length; i++) {
+//     if (!creditCardValidator) {
+//         event.preventDefault();
+//         console.log(`this ${creditCardValidator} prevented submission`);
+//     }
 
 
-}
+ });
+
+// //select the input elements with the type 'checkbox'
+// const selectInputElement = document.querySelectorAll('input[type=checkbox]');
+// console.log(selectInputElement);
+
+// //Loop over the activities'checkboxes
+// for (let i = 0; i < selectInputElement.length; i++) {
+//     selectInputElement[i].addEventListener('focus', e => {
+//         selectInputElement.parentElement.classList.add('focus');
+//     })
+
+//     selectInputElement[i].addEventListener('blur', e => {
+//         selectInputElement.parentElement.classList.remove('blur');
+//     })
+// }
