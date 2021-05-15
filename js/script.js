@@ -125,76 +125,86 @@ const getCVVField = document.getElementById('cvv');
 const getFormElement = document.querySelector('form');
 
 
-function validationPass(element) {
-    element.parentElement.className = 'valid';
-    element.parentElement.className.remove('not-valid');
-    element.parentElement.lastElementChild.display = 'none';
-  }
-  
-  function validationFail(element) {
-    element.parentElement.className = 'not-valid';
-    element.parentElement.className.remove('valid');
-    element.parentElement.display = 'lastElementChild';
-  }
+
 
 
 getFormElement.addEventListener('submit', (event) => {
     event.preventDefault();
     console.log('Event was triggered');
     
+    function validationPass(element) {
+        element.parentElement.classList.add('valid');
+        element.parentElement.classList.remove('not-valid');
+        element.parentElement.lastElementChild.style.display = 'none';
+    }
+      
+    function validationFail(element) {
+        element.parentElement.classList.add('not-valid');
+        element.parentElement.classList.remove('valid');
+        element.parentElement.lastElementChild.style.display = 'inherit';
+    }
+
     
     //helper function to validate name input
     
     function nameValidator() {
-        let nameElementValue = getNameField.value;
-        console.log(nameElementValue);        
+        let nameElementValue = getNameField.value;     
+        console.log(nameElementValue);
         let testNameValue = /^[a-zA-Z]+ [a-zA-Z]+?$/.test(nameElementValue);
         console.log(testNameValue);
-        
-        if (!nameValidator()) {
+        if (!testNameValue) {
             event.preventDefault();
             validationFail(getNameField);
         } else {
             validationPass(getNameField);
         }   
+        
+        return testNameValue;
     };
 
     nameValidator();
+
     
+    //helper function to validate email address input
+
+    function emailValidator() {
+        let emailElementValue = getEmailField.value;
+        console.log(emailElementValue);
+        let testEmailValue = /^[a-z]+@[a-z]+.com$/i.test(emailElementValue);
+        console.log(testEmailValue);
+        if (!testEmailValue) {
+            event.preventDefault();
+            validationFail(getEmailField);
+        } else {
+            validationPass(getEmailField);
+        }
+        
+        return testEmailValue;
+    };
+
+    emailValidator();
+
+
+    //     helper function to validate that at least one activity is selected
+    function activitiesValidator() {
+        let activitiesSectionIsValid = totalCost > 0;
+        console.log(activitiesSectionIsValid);
+        if (!activitiesSectionIsValid) {
+            event.preventDefault();
+            console.log(`this ${activitiesValidator} prevented submission`);
+         }    
+        return activitiesSectionIsValid;
+    };
+
+    activitiesValidator();
+
     
-//     //helper function to validate email address input
 
-//     const emailValidator = () => {
-//         let emailElementValue = getEmailField.value;
-//         let testEmailValue = /^[a-z]+@[a-z]+.com$/i.test(emailElementValue);
-//         console.log(emailElementValue);
-//         console.log(testEmailValue);
-//         return testEmailValue;
-//     };
 
-//     emailValidator();
+});
 
-//     if (!emailValidator) {
-//         event.preventDefault();
-//         getCardNumberField.className = 'invalid';
-//         getCardNumberField.lastElementChild.textContent = 'Please type in a correct credit card number';
-//         getCardNumberField.lastElementChild.className = 'error';
-//     }
-   
 
-//     //helper function to validate that at least one activity is selected
-//     const activitiesValidator = () => {
-//         let activitiesSectionIsValid = totalCost > 0;
-//         console.log(activitiesSectionIsValid);
-//         return activitiesSectionIsValid;
-//     };
 
-//     activitiesValidator();
-
-//     if (!activitiesValidator) {
-//         event.preventDefault();
-//         console.log(`this ${activitiesValidator} prevented submission`);
-//     }
 
 
 //     //helper function to validate credit card input if this payment method is selected
@@ -263,7 +273,7 @@ getFormElement.addEventListener('submit', (event) => {
 //     }
 
 
- });
+
 
 // //select the input elements with the type 'checkbox'
 // const selectInputElement = document.querySelectorAll('input[type=checkbox]');
