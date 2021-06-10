@@ -191,101 +191,87 @@ getFormElement.addEventListener('submit', (event) => {
         console.log(activitiesSectionIsValid);
         if (!activitiesSectionIsValid) {
             event.preventDefault();
-            console.log(`this ${activitiesValidator} prevented submission`);
-         }    
+            validationFail(referenceFieldset);
+        } else {
+            validationPass(referenceFieldset);
+        }
         return activitiesSectionIsValid;
     };
 
     activitiesValidator();
-
     
+    //helper function to validate credit card input if this payment method is selected
+    function cardNumberValidator() {
+        let cardNumberFieldValue = getCardNumberField.value;
+        console.log(cardNumberFieldValue);
+        const testCardNumberField = /^\d{13,16}$/.test(cardNumberFieldValue);
+        console.log(testCardNumberField);
+            
+        if(!testCardNumberField) {
+            event.preventDefault();
+            validationFail(getCardNumberField);
+        } else {
+            validationPass(getCardNumberField);
+        }
+            
+        return testCardNumberField;
+    }
+            
+            
+    function zipCodeValidator() {        
+        let getZipCodeFieldValue = getZipCodeField.value;
+        console.log(getZipCodeFieldValue);
+        const testZipCodeField = /^\d{5}$/.test(getZipCodeFieldValue);
+        console.log(testZipCodeField);
 
+        if(!testZipCodeField) {
+            event.preventDefault();
+            validationFail(getZipCodeField);
+        } else {
+            validationPass(getZipCodeField);
+        }
+        return testZipCodeField;
+
+    }
+
+
+    function CVVFieldValidator() {        
+        let getCVVFieldValue = getCVVField.value;
+        console.log(getCVVFieldValue);
+        const testCVVField = /^\d{3}$/.test(getCVVFieldValue);
+        console.log(testCVVField);
+
+        if(!testCVVField) {
+            event.preventDefault();
+            validationFail(getCVVField);
+        } else {
+            validationPass(getCVVField);
+        }
+
+        return testCVVField;
+        
+    }
+
+    cardNumberValidator();
+    zipCodeValidator();
+    CVVFieldValidator();
 
 });
 
-
-
-
-
-//     //helper function to validate credit card input if this payment method is selected
-//     const creditCardValidator = () => {
-//         if (selectPayment.value === 'credit-card') {
-//             let cardNumberFieldValue = getCardNumberField.value;
-//             const testCardNumberField = /^\d{13, 16}$/.test(cardNumberFieldValue);
-            
-//             if(!testCardNumberField) {
-//                 getCardNumberField.className = 'invalid';
-//                 getCardNumberField.lastElementChild.textContent = 'Please type in a correct credit card number';
-//                 getCardNumberField.lastElementChild.className = 'error';
-//             } else {
-//                 getCardNumberField.className = 'valid';
-//                 getCardNumberField.last.ElementChild.textContent = '';
-//                 getCardNumberField.lastElementChild.className = 'error';
-
-//             }
-//             return testCardNumberField;
-//         }
-
-//         if (selectPayment.value === 'credit-card') {
-//             let zipCodeFieldValue = getZipCodeField.value;
-//             const testZipCodeField = /^\d{5}$/.test(zipCodeFieldValue);
-//             if(!zipCodeFieldValue) {
-//                 getZipCodeField.className = 'invalid';
-//                 getZipCodeField.lastElementChild.textContent = 'Please type in a correct zip code';
-//                 getZipCodeField.lastElementChild.className = 'error';
-//             } else {
-//                 getZipCodeField.className = 'valid';
-//                 getZipCodeField.last.ElementChild.textContent = '';
-//                 getZipCodeField.lastElementChild.className = 'error';
-//             }
-            
-//             return testZipCodeField;
-//         }
-
-//         if (selectPayment.value === 'credit-card') {
-//             let CVVFieldValue = getCVVField.value;
-//             const testCVVField = /^\d{3}$/.test(CVVFieldValue);
-//             if(!CVVFieldValue) {
-//                 getCVVField.className = 'invalid';
-//                 getCVVField.nextElementSibling.textContent = 'Please type in a correct cvv code';
-//                 getCVVField.nextElementSibling.className = 'error';
-//             } else {
-//                 getCVVField.className = 'valid';
-//                 getCVVField.nextElementSibling.textContent = '';
-//                 getCVVField.nextElementSibling.className = 'error';
-//             }
-//             return testCVVField;
-//         }
-    
-//         console.log(cardNumberFieldValue);
-//         console.log(testCardNumberField);
-//         console.log(zipCodeFieldValue);
-//         console.log(testZipCodeField);
-//         console.log(CVVFieldValue);
-//         console.log(testCVVField);
-//     };
-
-//     creditCardValidator();
-
-//     if (!creditCardValidator) {
-//         event.preventDefault();
-//         console.log(`this ${creditCardValidator} prevented submission`);
-//     }
-
-
-
+// Accessibility
 
 // //select the input elements with the type 'checkbox'
-// const selectInputElement = document.querySelectorAll('input[type=checkbox]');
-// console.log(selectInputElement);
+const selectInputElement = document.querySelectorAll('input[type=checkbox]');
+console.log(selectInputElement);
 
 // //Loop over the activities'checkboxes
-// for (let i = 0; i < selectInputElement.length; i++) {
-//     selectInputElement[i].addEventListener('focus', e => {
-//         selectInputElement.parentElement.classList.add('focus');
-//     })
+for (let i = 0; i < selectInputElement.length; i++) {
+    selectInputElement[i].addEventListener('focus', e => {
+    selectInputElement[i].parentElement.classList.add('focus');
+    })
 
-//     selectInputElement[i].addEventListener('blur', e => {
-//         selectInputElement.parentElement.classList.remove('blur');
-//     })
-// }
+    selectInputElement[i].addEventListener('blur', e => {
+    selectInputElement[i].parentElement.classList.remove('focus');
+    })
+}
+     
