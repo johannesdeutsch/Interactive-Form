@@ -1,24 +1,20 @@
-console.log('Test');
-
-//prevent default Scrolling
+//prevent default Scrolling and set the focus to the first text field
 const getNameField = document.getElementById('name');
 getNameField.focus({preventScroll:true});
-console.log(getNameField);
 
 
-// select Job-Role-Select Element and Ohter Job Role Field
+// select the Job-Role-Select Element and Other-Job-Role-Field
 const selectSelectElement = document.getElementById('title');
 const selectOtherJobRoleField = document.getElementById('other-job-role');
-console.log(selectSelectElement);
-console.log(selectOtherJobRoleField);
 
-//hide Other Job Role Field by default
+
+//hide Other-Job-Role-Field by default
 selectOtherJobRoleField.style.display = 'none';
 
-// in case of selecting the "Other Job Role" option the field will display, and if not it stays hidden
+
+// in case of selecting the "Other" option the field will display, and if not it stays hidden
 selectSelectElement.addEventListener('change', (event) => {
     if (event.target.value === 'other') {
-        console.log(event.target.value);
         selectOtherJobRoleField.style.display = 'block';
     } else {
         selectOtherJobRoleField.style.display = 'none';
@@ -26,23 +22,21 @@ selectSelectElement.addEventListener('change', (event) => {
 });
 
 
-// select Design and Colour "select" elements
+// only showing the colors that are available for the designs, and hide the others. The colors are hidden by default.
+
 const selectDesignElement = document.getElementById('design');
 const selectColorElement = document.getElementById('color');
 const selectColorOptionElements = document.getElementById('color').children;
-console.log(selectDesignElement);
-console.log(selectColorElement);
-console.log(selectColorOptionElements);
 
 
 selectColorElement.disabled = true;
+
 selectDesignElement.addEventListener('change', (event) => {
     selectColorElement.disabled = false;
     for (let i = 1; i < selectColorOptionElements.length; i++) {
         const eventValue = event.target.value;
         const dataThemeAttribute = selectColorOptionElements[i].getAttribute('data-theme');
-        console.log(eventValue);
-        console.log(dataThemeAttribute);
+    
         if(eventValue[i] === dataThemeAttribute[i]) {
             selectColorOptionElements[i].hidden = false;
             selectColorOptionElements[i].setAttribute('selected', 'true');
@@ -51,24 +45,17 @@ selectDesignElement.addEventListener('change', (event) => {
             selectColorOptionElements[i].hidden = true;
             selectColorOptionElements[i].setAttribute('selected', 'false');
         }
-        console.log(selectColorOptionElements[i].hidden);
-        console.log(selectColorOptionElements[i].getAttribute('selected'));
     }
-
 });
 
-// "Register for Activities" section
+// "Register for Activities" section: Updating the total cost of the activities based on the user's selection
 const referenceFieldset = document.getElementById('activities');
 const referenceP = document.getElementById('activities-cost');
-console.log(referenceFieldset);
-console.log(referenceP);
 
 let totalCost = 0;
 
 referenceFieldset.addEventListener('change', (event) => {
     const dataCost = +(event.target.getAttribute('data-cost'));
-    console.log(dataCost);
-    console.log(typeof dataCost);
 
     if(event.target.checked) {
         totalCost += dataCost;
@@ -77,29 +64,23 @@ referenceFieldset.addEventListener('change', (event) => {
         totalCost -= dataCost;
         referenceP.innerHTML = `Total: $${totalCost}`;
     }
-    console.log(totalCost);
-    console.log(event.target.checked);
 });
 
-// "Payment info" section
+// "Payment info" section: selecting elements
 const selectPayment = document.getElementById('payment');
 const divCreditCard = document.getElementById('credit-card');
 const divPaypal = document.getElementById('paypal');
 const divBitcoin = document.getElementById('bitcoin');
 
-console.log(selectPayment);
-console.log(divCreditCard);
-console.log(divPaypal);
-console.log(divBitcoin);
-
-//hide bitcoin and paypal methods
+//hide bitcoin and paypal methods by default
 divPaypal.hidden = true;
 divBitcoin.hidden = true;
 
-//target Payment select element's second child and give it the selected property
+//target selectPayment element's second child (Credit Card) and give it the selected property
 const secondSelectChild = selectPayment.children[1];
 secondSelectChild.setAttribute('selected', 'selected');
 
+//all payment methods except the selected one are hidden
 selectPayment.addEventListener('change', (event) => {
     if (event.target.value === 'credit-card') {
         divCreditCard.hidden = false;
@@ -116,8 +97,8 @@ selectPayment.addEventListener('change', (event) => {
     }
 });
 
-//Form Validation
-// select Elements
+// Form Validation
+// select the required elements
 const getEmailField = document.getElementById('email');
 const getCardNumberField = document.getElementById('cc-num');
 const getZipCodeField = document.getElementById('zip');
@@ -125,12 +106,11 @@ const getCVVField = document.getElementById('cvv');
 const getFormElement = document.querySelector('form');
 
 
-
-
+// listen for the 'submit' event, and then testing if all the fields have the required input. 
+// If not, submission will be prevented 
 
 getFormElement.addEventListener('submit', (event) => {
     event.preventDefault();
-    console.log('Event was triggered');
     
     function validationPass(element) {
         element.parentElement.classList.add('valid');
@@ -149,9 +129,7 @@ getFormElement.addEventListener('submit', (event) => {
     
     function nameValidator() {
         let nameElementValue = getNameField.value;     
-        console.log(nameElementValue);
         let testNameValue = /^[a-zA-Z]+ [a-zA-Z]+?$/.test(nameElementValue);
-        console.log(testNameValue);
         if (!testNameValue) {
             event.preventDefault();
             validationFail(getNameField);
@@ -169,9 +147,8 @@ getFormElement.addEventListener('submit', (event) => {
 
     function emailValidator() {
         let emailElementValue = getEmailField.value;
-        console.log(emailElementValue);
         let testEmailValue = /^[a-z]+@[a-z]+.com$/i.test(emailElementValue);
-        console.log(testEmailValue);
+        
         if (!testEmailValue) {
             event.preventDefault();
             validationFail(getEmailField);
@@ -186,9 +163,9 @@ getFormElement.addEventListener('submit', (event) => {
 
 
     //     helper function to validate that at least one activity is selected
+
     function activitiesValidator() {
         let activitiesSectionIsValid = totalCost > 0;
-        console.log(activitiesSectionIsValid);
         if (!activitiesSectionIsValid) {
             event.preventDefault();
             validationFail(referenceFieldset);
@@ -200,12 +177,12 @@ getFormElement.addEventListener('submit', (event) => {
 
     activitiesValidator();
     
+
     //helper function to validate credit card input if this payment method is selected
+
     function cardNumberValidator() {
         let cardNumberFieldValue = getCardNumberField.value;
-        console.log(cardNumberFieldValue);
         const testCardNumberField = /^\d{13,16}$/.test(cardNumberFieldValue);
-        console.log(testCardNumberField);
             
         if(!testCardNumberField) {
             event.preventDefault();
@@ -217,12 +194,11 @@ getFormElement.addEventListener('submit', (event) => {
         return testCardNumberField;
     }
             
-            
+    // helper function to validate zip number input
+    
     function zipCodeValidator() {        
         let getZipCodeFieldValue = getZipCodeField.value;
-        console.log(getZipCodeFieldValue);
         const testZipCodeField = /^\d{5}$/.test(getZipCodeFieldValue);
-        console.log(testZipCodeField);
 
         if(!testZipCodeField) {
             event.preventDefault();
@@ -235,11 +211,11 @@ getFormElement.addEventListener('submit', (event) => {
     }
 
 
+    // helper function to validate CVV field input
+
     function CVVFieldValidator() {        
         let getCVVFieldValue = getCVVField.value;
-        console.log(getCVVFieldValue);
         const testCVVField = /^\d{3}$/.test(getCVVFieldValue);
-        console.log(testCVVField);
 
         if(!testCVVField) {
             event.preventDefault();
@@ -260,11 +236,10 @@ getFormElement.addEventListener('submit', (event) => {
 
 // Accessibility
 
-// //select the input elements with the type 'checkbox'
+// Select the input elements with the type 'checkbox'
 const selectInputElement = document.querySelectorAll('input[type=checkbox]');
-console.log(selectInputElement);
 
-// //Loop over the activities'checkboxes
+// Loop over the activities' checkboxes
 for (let i = 0; i < selectInputElement.length; i++) {
     selectInputElement[i].addEventListener('focus', e => {
     selectInputElement[i].parentElement.classList.add('focus');
