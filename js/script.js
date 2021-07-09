@@ -67,6 +67,7 @@ referenceFieldset.addEventListener('change', (event) => {
 
 
 
+    /* Tried to code the following for an Exceeds:
     // prevent users to choose activities which happen at the same time
 
     let selectSpanElement = document.getElementsByClassName('activity-cost');
@@ -82,7 +83,7 @@ referenceFieldset.addEventListener('change', (event) => {
             selectSpanElement[i].parentElement.className.remove('disabled');
         }      
     }
-    
+    */
     
 
 
