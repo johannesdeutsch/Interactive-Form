@@ -64,6 +64,34 @@ referenceFieldset.addEventListener('change', (event) => {
         totalCost -= dataCost;
         referenceP.innerHTML = `Total: $${totalCost}`;
     }
+
+
+
+    // prevent users to choose activities which happen at the same time
+
+    let selectSpanElement = document.getElementsByClassName('activity-cost');
+    let activitiesDivChildren = document.getElementById('activities-box').children;
+    let dayAndTime = event.target.getAttribute("data-day-and-time");
+    console.log(dayAndTime);
+
+    for (let i = 0; i < dayAndTime.length; i++) {
+        if (dayAndTime.checked === dayAndTime.checked) {
+            activitiesDivChildren[i].firstElementChild.disabled;
+            selectSpanElement[i].parentElement.className = 'disabled';
+        } else {
+            selectSpanElement[i].parentElement.className.remove('disabled');
+        }      
+    }
+    
+    
+
+
+
+
+
+
+
+
 });
 
 // "Payment info" section: selecting elements
@@ -249,4 +277,4 @@ for (let i = 0; i < selectInputElement.length; i++) {
     selectInputElement[i].parentElement.classList.remove('focus');
     })
 }
-     
+   
