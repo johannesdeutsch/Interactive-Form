@@ -32,7 +32,17 @@ const selectColorOptionElements = document.getElementById('color').children;
 selectColorElement.disabled = true;
 
 selectDesignElement.addEventListener('change', (event) => {
+   
+    
     selectColorElement.disabled = false;
+
+    if (selectDesignElement.value === 'js puns') {
+        selectColorElement.selectedIndex = 1;
+    } else if (selectDesignElement.value === 'heart js') {
+        selectColorElement.selectedIndex = 4;
+    }
+
+
     for (let i = 1; i < selectColorOptionElements.length; i++) {
         const eventValue = event.target.value;
         const dataThemeAttribute = selectColorOptionElements[i].getAttribute('data-theme');
@@ -46,6 +56,10 @@ selectDesignElement.addEventListener('change', (event) => {
             selectColorOptionElements[i].setAttribute('selected', 'false');
         }
     }
+
+
+   
+
 });
 
 // "Register for Activities" section: Updating the total cost of the activities based on the user's selection
@@ -158,7 +172,7 @@ getFormElement.addEventListener('submit', (event) => {
     
     function nameValidator() {
         let nameElementValue = getNameField.value;     
-        let testNameValue = /^[a-zA-Z]+ [a-zA-Z]+?$/.test(nameElementValue);
+        let testNameValue = /^[a-zA-Z]+ *[a-zA-Z]*?$/.test(nameElementValue);
         if (!testNameValue) {
             event.preventDefault();
             validationFail(getNameField);
@@ -257,9 +271,14 @@ getFormElement.addEventListener('submit', (event) => {
         
     }
 
+    
+
+
+
     cardNumberValidator();
     zipCodeValidator();
     CVVFieldValidator();
+    
 
 });
 
@@ -278,4 +297,8 @@ for (let i = 0; i < selectInputElement.length; i++) {
     selectInputElement[i].parentElement.classList.remove('focus');
     })
 }
-   
+  
+function clearInputForms() {
+    document.getElementsByTagName("input").value = "";
+}
+
