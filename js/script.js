@@ -297,8 +297,25 @@ for (let i = 0; i < selectInputElement.length; i++) {
     selectInputElement[i].parentElement.classList.remove('focus');
     })
 }
-  
-function clearInputForms() {
-    document.getElementsByTagName("input").value = "";
+ 
+
+// Clear the form
+
+cancelForm = () => { 
+    document.getElementById("form-hint").reset();
 }
 
+render() {
+    return (
+        <form id="form-hint">
+            <input id="name" />
+            <input id="email" />
+            <select id="title" />
+            <input id="other-job-role" />
+            <select id="size" />
+            <select id="design" />
+            <select id="color" />
+            <div id="activities-box" /> 
+        </form>
+    );
+}
