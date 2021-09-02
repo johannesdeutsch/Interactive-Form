@@ -159,13 +159,13 @@ getFormElement.addEventListener('submit', (event) => {
         element.parentElement.classList.add('valid');
         element.parentElement.classList.remove('not-valid');
         element.parentElement.lastElementChild.style.display = 'none';
-    }
+    };
       
     function validationFail(element) {
         element.parentElement.classList.add('not-valid');
         element.parentElement.classList.remove('valid');
         element.parentElement.lastElementChild.style.display = 'inherit';
-    }
+    };
 
     
     //helper function to validate name input
@@ -298,24 +298,3 @@ for (let i = 0; i < selectInputElement.length; i++) {
     })
 }
  
-
-// Clear the form
-
-cancelForm = () => { 
-    document.getElementById("form-hint").reset();
-}
-
-render() {
-    return (
-        <form id="form-hint">
-            <input id="name" />
-            <input id="email" />
-            <select id="title" />
-            <input id="other-job-role" />
-            <select id="size" />
-            <select id="design" />
-            <select id="color" />
-            <div id="activities-box" /> 
-        </form>
-    );
-}
