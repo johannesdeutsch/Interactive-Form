@@ -100,13 +100,6 @@ referenceFieldset.addEventListener('change', (event) => {
     */
     
 
-
-
-
-
-
-
-
 });
 
 // "Payment info" section: selecting elements
@@ -152,140 +145,148 @@ const getFormElement = document.querySelector('form');
 // listen for the 'submit' event, and then testing if all the fields have the required input. 
 // If not, submission will be prevented 
 
-getFormElement.addEventListener('submit', (event) => {
-    event.preventDefault();
-    
-    function validationPass(element) {
-        element.parentElement.classList.add('valid');
-        element.parentElement.classList.remove('not-valid');
-        element.parentElement.lastElementChild.style.display = 'none';
-    };
+function validationPass(element) {
+    element.parentElement.className = 'valid';
+    element.parentElement.classList.remove('not-valid');
+    element.parentElement.lastElementChild.style.display = 'none';
+};
       
-    function validationFail(element) {
-        element.parentElement.classList.add('not-valid');
-        element.parentElement.classList.remove('valid');
-        element.parentElement.lastElementChild.style.display = 'inherit';
-    };
+function validationFail(element) {
+    element.parentElement.className = 'not-valid';
+    element.parentElement.classList.remove('valid');
+    element.parentElement.lastElementChild.style.display = 'block';
+};
 
     
-    //helper function to validate name input
+//helper function to validate name input
     
-    function nameValidator() {
-        let nameElementValue = getNameField.value;     
-        let testNameValue = /^[a-zA-Z]+ *[a-zA-Z]*?$/.test(nameElementValue);
-        if (!testNameValue) {
-            event.preventDefault();
-            validationFail(getNameField);
-        } else {
-            validationPass(getNameField);
-        }   
+
+function nameValidator() {
+    let nameElementValue = getNameField.value;     
+    let testNameValue = /^[a-zA-Z]+ *[a-zA-Z]*?$/.test(nameElementValue);
+    if (!testNameValue) {
+        validationFail(getNameField);
+    } else {
+        validationPass(getNameField);
+    }   
         
-        return testNameValue;
-    };
-
-    nameValidator();
+    return testNameValue;
+};
 
     
-    //helper function to validate email address input
 
-    function emailValidator() {
-        let emailElementValue = getEmailField.value;
-        let testEmailValue = /^[a-z]+@[a-z]+.com$/i.test(emailElementValue);
-        
-        if (!testEmailValue) {
-            event.preventDefault();
-            validationFail(getEmailField);
-        } else {
-            validationPass(getEmailField);
-        }
-        
-        return testEmailValue;
-    };
-
-    emailValidator();
-
-
-    //     helper function to validate that at least one activity is selected
-
-    function activitiesValidator() {
-        let activitiesSectionIsValid = totalCost > 0;
-        if (!activitiesSectionIsValid) {
-            event.preventDefault();
-            validationFail(referenceFieldset);
-        } else {
-            validationPass(referenceFieldset);
-        }
-        return activitiesSectionIsValid;
-    };
-
-    activitiesValidator();
+//helper function to validate email address input
     
 
-    //helper function to validate credit card input if this payment method is selected
+function emailValidator() {
+    let emailElementValue = getEmailField.value;
+    let testEmailValue = /^[a-z]+@[a-z]+.com$/i.test(emailElementValue);
+        
+    if (!testEmailValue) {
+         validationFail(getEmailField);
+    } else {
+        validationPass(getEmailField);
+    }
+        
+    return testEmailValue;
+};
 
-    function cardNumberValidator() {
-        let cardNumberFieldValue = getCardNumberField.value;
-        const testCardNumberField = /^\d{13,16}$/.test(cardNumberFieldValue);
+    
+//     helper function to validate that at least one activity is selected
+
+function activitiesValidator() {
+    let activitiesSectionIsValid = totalCost > 0;
+    if (!activitiesSectionIsValid) {
+        referenceFieldset.classList.remove('not-valid');
+        referenceFieldset.classList.add('valid');
+        referenceFieldset.lastElementChild.style.display = 'block';
+    } else {
+        referenceFieldset.classList.add('valid');
+        referenceFieldset.classList.remove('not-valid');
+        referenceFieldset.lastElementChild.style.display = 'none';
+    }
+    return activitiesSectionIsValid;
+};
+
+    
+
+//helper function to validate credit card input if this payment method is selected
+
+function cardNumberValidator() {
+    let cardNumberFieldValue = getCardNumberField.value;
+    const testCardNumberField = /^\d{13,16}$/.test(cardNumberFieldValue);
             
-        if(!testCardNumberField) {
-            event.preventDefault();
-            validationFail(getCardNumberField);
-        } else {
-            validationPass(getCardNumberField);
-        }
-            
-        return testCardNumberField;
+    if(!testCardNumberField) {
+        validationFail(getCardNumberField);
+    } else {
+        validationPass(getCardNumberField);
     }
             
-    // helper function to validate zip number input
+    return testCardNumberField;
+};
+  
+
+// helper function to validate zip number input
     
-    function zipCodeValidator() {        
-        let getZipCodeFieldValue = getZipCodeField.value;
-        const testZipCodeField = /^\d{5}$/.test(getZipCodeFieldValue);
+function zipCodeValidator() {        
+    let getZipCodeFieldValue = getZipCodeField.value;
+    const testZipCodeField = /^\d{5}$/.test(getZipCodeFieldValue);
 
-        if(!testZipCodeField) {
-            event.preventDefault();
-            validationFail(getZipCodeField);
-        } else {
-            validationPass(getZipCodeField);
-        }
-        return testZipCodeField;
+    if (!testZipCodeField) {
+        validationFail(getZipCodeField);
+    } else {
+        validationPass(getZipCodeField);
+    }
+    return testZipCodeField;
 
+};
+
+
+// helper function to validate CVV field input
+    
+function CVVFieldValidator() {
+    let getCVVFieldValue = getCVVField.value;
+    const testCVVField = /^\d{3}$/.test(getCVVFieldValue);
+
+    if (!testCVVField) {
+        validationFail(getCVVField);
+    } else {
+        validationPass(getCVVField);
     }
 
+    return testCVVField;
 
-    // helper function to validate CVV field input
+};
 
-    function CVVFieldValidator() {        
-        let getCVVFieldValue = getCVVField.value;
-        const testCVVField = /^\d{3}$/.test(getCVVFieldValue);
-
-        if(!testCVVField) {
-            event.preventDefault();
-            validationFail(getCVVField);
-        } else {
-            validationPass(getCVVField);
-        }
-
-        return testCVVField;
-        
-    }
-
-    
-
-
-
-    cardNumberValidator();
-    zipCodeValidator();
-    CVVFieldValidator();
-    
-
-});
-
-// Accessibility
 
 // Select the input elements with the type 'checkbox'
 const selectInputElement = document.querySelectorAll('input[type=checkbox]');
+
+
+//Event Listener listening for submission and preventing refreshing if one or more of the inputs are incorrect or missing. In the case everything is correct, the site refreshes and the value of the fields is cleared
+
+getFormElement.addEventListener('submit', (event) => {
+    
+    if (nameValidator() && emailValidator() && activitiesValidator() && cardNumberValidator() && zipCodeValidator() && CVVFieldValidator()) {
+        getNameField.value = '';
+        getEmailField.value = '';
+        selectInputElement.value = '';
+        getCardNumberField.value = '';
+        getZipCodeField.value = '';
+        getCVVField.value = '';
+    } else {
+    event.preventDefault();
+    nameValidator();
+    emailValidator();
+    activitiesValidator();
+    cardNumberValidator();
+    zipCodeValidator();
+    CVVFieldValidator();
+    }
+    
+});
+
+// Accessibility
 
 // Loop over the activities' checkboxes
 for (let i = 0; i < selectInputElement.length; i++) {
