@@ -180,7 +180,7 @@ function nameValidator() {
 
 function emailValidator() {
     let emailElementValue = getEmailField.value;
-    let testEmailValue = /^[a-z]+@[a-z]+.com$/i.test(emailElementValue);
+    let testEmailValue = /^[a-z0-9]+@[a-z0-9]+.com$/i.test(emailElementValue);
         
     if (!testEmailValue) {
          validationFail(getEmailField);
