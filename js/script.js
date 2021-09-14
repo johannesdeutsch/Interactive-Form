@@ -117,7 +117,7 @@ const secondSelectChild = selectPayment.children[1];
 secondSelectChild.setAttribute('selected', 'selected');
 
 //all payment methods except the selected one are hidden
-selectPayment.addEventListener('change', (event) => {
+const paymentMethodSelection = selectPayment.addEventListener('change', (event) => {
     if (event.target.value === 'credit-card') {
         divCreditCard.hidden = false;
         divPaypal.hidden = true;
@@ -197,8 +197,7 @@ function emailValidator() {
 function activitiesValidator() {
     let activitiesSectionIsValid = totalCost > 0;
     if (!activitiesSectionIsValid) {
-        referenceFieldset.classList.remove('not-valid');
-        referenceFieldset.classList.add('valid');
+        referenceFieldset.classList.add('not-valid');
         referenceFieldset.lastElementChild.style.display = 'block';
     } else {
         referenceFieldset.classList.add('valid');
@@ -208,7 +207,7 @@ function activitiesValidator() {
     return activitiesSectionIsValid;
 };
 
-    
+
 
 //helper function to validate credit card input if this payment method is selected
 
@@ -259,6 +258,23 @@ function CVVFieldValidator() {
 };
 
 
+// check which payment method is selected. If Credit Card is selected, its fields will be validated.
+
+function paymentSelection() {
+    
+    if (selectPayment.value === 'credit-card') {
+        selectPayment.parentElement.classList.add('not-valid');
+        cardNumberValidator();
+        zipCodeValidator();
+        CVVFieldValidator();
+    } else if (selectPayment.value === 'paypal' || selectPayment.value === 'bitcoin') {
+        selectPayment.parentElement.classList.remove('not-valid');
+        return true;
+    }
+};
+
+
+
 // Select the input elements with the type 'checkbox'
 const selectInputElement = document.querySelectorAll('input[type=checkbox]');
 
@@ -266,8 +282,7 @@ const selectInputElement = document.querySelectorAll('input[type=checkbox]');
 //Event Listener listening for submission and preventing refreshing if one or more of the inputs are incorrect or missing. In the case everything is correct, the site refreshes and the value of the fields is cleared
 
 getFormElement.addEventListener('submit', (event) => {
-    
-    if (nameValidator() && emailValidator() && activitiesValidator() && cardNumberValidator() && zipCodeValidator() && CVVFieldValidator()) {
+    if (nameValidator() && emailValidator() && activitiesValidator() && paymentSelection()) {
         getNameField.value = '';
         getEmailField.value = '';
         selectInputElement.value = '';
@@ -279,9 +294,7 @@ getFormElement.addEventListener('submit', (event) => {
     nameValidator();
     emailValidator();
     activitiesValidator();
-    cardNumberValidator();
-    zipCodeValidator();
-    CVVFieldValidator();
+    paymentSelection();
     }
     
 });
